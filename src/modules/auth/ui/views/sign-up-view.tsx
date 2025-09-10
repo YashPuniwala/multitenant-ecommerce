@@ -18,10 +18,9 @@ import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTRPC } from "@/trpc/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { register } from "@/actions/auth";
+import { useTransition } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,23 +28,7 @@ const poppins = Poppins({
 });
 
 export const SignUpView = () => {
-  const router = useRouter();
-
-  const trpc = useTRPC();
-  const queryClient = useQueryClient()
-
-  const register = useMutation(
-    trpc.auth.register.mutationOptions({
-      onError: (error) => {
-        toast.error(error.message);
-      },
-      onSuccess: async() => {
-                await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
-
-        router.push("/");
-      },
-    })
-  );
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     mode: "all",
@@ -58,7 +41,17 @@ export const SignUpView = () => {
   });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    register.mutate(values);
+    startTransition(async () => {
+      try {
+        const formData = new FormData();
+        formData.append("email", values.email);
+        formData.append("password", values.password);
+        formData.append("username", values.username);
+        await register(formData);
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Registration failed");
+      }
+    });
   };
 
   const username = form.watch("username");
@@ -144,13 +137,13 @@ export const SignUpView = () => {
             />
 
             <Button
-              disabled={register.isPending}
+              disabled={isPending}
               type="submit"
               size="lg"
               variant="elevated"
               className="bg-black text-white hover:bg-pink-400 hover:text-primary"
             >
-              Create account
+              {isPending ? "Creating account..." : "Create account"}
             </Button>
           </form>
         </Form>

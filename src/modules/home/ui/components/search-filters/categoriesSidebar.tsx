@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -10,10 +10,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
 import { CustomCategory } from "@/app/(app)/(home)/types";
-import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { getCategories } from "@/actions/getCategories";
 
 interface CategoriesSidebarProps {
   open: boolean;
@@ -24,14 +22,28 @@ const CategoriesSidebar = ({
   open,
   onOpenChange,
 }: CategoriesSidebarProps) => {
-  const trpc = useTRPC()
-  const {data} = useQuery(trpc.categories.getMany.queryOptions())
-
   const router = useRouter();
+  const [data, setData] = useState<CustomCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [parentCategories, setParentCategories] = useState<CustomCategory[] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CustomCategory | null>(null);
 
-const [parentCategories, setParentCategories] = useState<CategoriesGetManyOutput | null>(null);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categories = await getCategories();
+        setData(categories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const [selectedCategory, setSelectedCategory] = useState<CategoriesGetManyOutput[1] | null>(null);
+    if (open) {
+      fetchCategories();
+    }
+  }, [open]);
 
   const currentCategories = parentCategories ?? data ?? [];
 
@@ -41,9 +53,9 @@ const [selectedCategory, setSelectedCategory] = useState<CategoriesGetManyOutput
     onOpenChange(open);
   };
 
-  const handleCategoryClick = (category: CategoriesGetManyOutput[1]) => {
+  const handleCategoryClick = (category: CustomCategory) => {
     if (category.subcategories && category.subcategories.length > 0) {
-      setParentCategories(category.subcategories as CategoriesGetManyOutput);
+      setParentCategories(category.subcategories);
       setSelectedCategory(category);
     } else {
       if (parentCategories && selectedCategory) {
@@ -68,6 +80,19 @@ const [selectedCategory, setSelectedCategory] = useState<CategoriesGetManyOutput
   };
 
   const backgroundColor = selectedCategory?.color || "white";
+
+  if (loading) {
+    return (
+      <Sheet open={open} onOpenChange={handleOpenChange}>
+        <SheetContent side="left" className="p-0 transition-none">
+          <SheetHeader className="p-4 border-b">
+            <SheetTitle>Categories</SheetTitle>
+          </SheetHeader>
+          <div className="p-4">Loading...</div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>

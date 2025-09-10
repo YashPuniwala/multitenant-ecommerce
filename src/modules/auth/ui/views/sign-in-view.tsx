@@ -16,11 +16,10 @@ import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTRPC } from "@/trpc/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { loginSchema } from "../../schemas";
+import { login } from "@/actions/auth";
+import { useTransition } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,22 +27,7 @@ const poppins = Poppins({
 });
 
 export const SignInView = () => {
-  const router = useRouter();
-
-  const trpc = useTRPC();
-  const queryClient = useQueryClient()
-  
-  const login = useMutation(
-    trpc.auth.login.mutationOptions({
-      onError: (error) => {
-        toast.error(error.message);
-      },
-      onSuccess: async() => {
-        await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
-        router.push("/");
-      },
-    })
-  );
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     mode: "all",
@@ -55,7 +39,16 @@ export const SignInView = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    login.mutate(values);
+    startTransition(async () => {
+      try {
+        const formData = new FormData();
+        formData.append("email", values.email);
+        formData.append("password", values.password);
+        await login(formData);
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Login failed");
+      }
+    });
   };
 
   return (
@@ -114,13 +107,13 @@ export const SignInView = () => {
             />
 
             <Button
-              disabled={login.isPending}
+              disabled={isPending}
               type="submit"
               size="lg"
               variant="elevated"
               className="bg-black text-white hover:bg-pink-400 hover:text-primary"
             >
-              Login
+              {isPending ? "Logging in..." : "Login"}
             </Button>
           </form>
         </Form>

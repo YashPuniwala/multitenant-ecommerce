@@ -1,18 +1,24 @@
-"use client";
-
 import React from "react";
 import SearchInput from "./search-input";
 import Categories from "./categories";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { DEFAULT_BG_COLOR } from "@/modules/home/constants";
 import BreadcrumbsNavigation from "./breadcrumbs-navigation";
+import { getCategories } from "@/actions/getCategories";
 
-const SearchFilters = () => {
-  const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+const SearchFilters = async () => {
+  const data = await getCategories();
 
+  return (
+    <SearchFiltersContent data={data} />
+  );
+};
+
+interface SearchFiltersContentProps {
+  data: Awaited<ReturnType<typeof getCategories>>;
+}
+
+const SearchFiltersContent = ({ data }: SearchFiltersContentProps) => {
   const params = useParams();
   const categoryParam = params.category as string | undefined;
   const activeCategory = categoryParam || "all";
@@ -44,7 +50,7 @@ const SearchFilters = () => {
         activeCategory={activeCategory}
         activeCategoryName={activeCategoryName}
         activeSubcategoryName={activeSubcategoryName}
-      />{" "}
+      />
     </div>
   );
 };

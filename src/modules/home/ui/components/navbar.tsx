@@ -8,8 +8,6 @@ import { usePathname } from "next/navigation";
 import { NavbarSidebar } from "./navbar-sidebar";
 import { useState } from "react";
 import { MenuIcon } from "lucide-react";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -45,10 +43,12 @@ const navbarItems = [
   { href: "/contact", children: "Contact" },
 ];
 
-export const Navbar = () => {
+interface NavbarProps {
+  user?: any;
+}
+
+export const Navbar = ({ user }: NavbarProps) => {
   const pathname = usePathname();
-  const trpc = useTRPC()
-  const session = useQuery(trpc.auth.session.queryOptions())
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -76,7 +76,7 @@ export const Navbar = () => {
         ))}
       </div>
 
-      {session.data?.user ? (
+      {user ? (
         <div className="hidden lg:flex h-full">
         <Button
           asChild
