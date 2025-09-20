@@ -19,27 +19,28 @@ const SearchInput = ({ disabled }: Props) => {
   const trpc = useTRPC();
   const session = useQuery(trpc.auth.session.queryOptions());
   return (
-    <div className="flex items-center gap-2 w-full">
+    <div className="flex items-center gap-3 w-full">
       <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       <div className="relative w-full">
-        <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
+        <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground" />
         <Input
-          className="pl-8"
+          className="pl-12 h-12 text-base shadow-lg"
           placeholder="Search products"
           disabled={disabled}
         />
       </div>
 
       <Button
-        variant="elevated"
-        className="size-12 shrink-0 flex lg:hidden"
+        variant="outline"
+        size="icon"
+        className="size-12 shrink-0 flex lg:hidden shadow-lg"
         onClick={() => setIsSidebarOpen(true)}
       >
         <ListFilterIcon />
       </Button>
 
       {session.data?.user && (
-        <Button asChild variant="elevated">
+        <Button asChild variant="gradient" className="shadow-lg">
           <Link href="/library">
             <BookmarkCheckIcon />
             Library

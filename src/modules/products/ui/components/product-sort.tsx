@@ -17,15 +17,15 @@ const ProductSort = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-3 flex-wrap">
       <Button
         size="sm"
         className={cn(
-          "rounded-full bg-white hover:bg-white",
+          "rounded-full transition-all duration-200",
           filters.sort !== "curated" &&
-            "bg-transparent border-transparent hover:border-border hover:bg-transparent"
+            "bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
         )}
-        variant="secondary"
+        variant={filters.sort === "curated" ? "default" : "ghost"}
         onClick={() => handleSortChange("curated")}
       >
         Curated
@@ -34,11 +34,11 @@ const ProductSort = () => {
       <Button
         size="sm"
         className={cn(
-          "rounded-full bg-white hover:bg-white",
+          "rounded-full transition-all duration-200",
           filters.sort !== "trending" &&
-            "bg-transparent border-transparent hover:border-border hover:bg-transparent"
+            "bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
         )}
-        variant="secondary"
+        variant={filters.sort === "trending" ? "default" : "ghost"}
         onClick={() => handleSortChange("trending")}
       >
         Trending
@@ -47,11 +47,11 @@ const ProductSort = () => {
       <Button
         size="sm"
         className={cn(
-          "rounded-full bg-white hover:bg-white",
+          "rounded-full transition-all duration-200",
           filters.sort !== "hot_and_new" &&
-            "bg-transparent border-transparent hover:border-border hover:bg-transparent"
+            "bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
         )}
-        variant="secondary"
+        variant={filters.sort === "hot_and_new" ? "default" : "ghost"}
         onClick={() => handleSortChange("hot_and_new")}
       >
         Hot & New
@@ -61,11 +61,11 @@ const ProductSort = () => {
       <Button
         size="sm"
         className={cn(
-          "rounded-full bg-white hover:bg-white",
+          "rounded-full transition-all duration-200",
           filters.sort !== "price_asc" &&
-            "bg-transparent border-transparent hover:border-border hover:bg-transparent"
+            "bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
         )}
-        variant="secondary"
+        variant={filters.sort === "price_asc" ? "default" : "ghost"}
         onClick={() => handleSortChange("price_asc")}
       >
         Price ↑
@@ -74,11 +74,11 @@ const ProductSort = () => {
       <Button
         size="sm"
         className={cn(
-          "rounded-full bg-white hover:bg-white",
+          "rounded-full transition-all duration-200",
           filters.sort !== "price_desc" &&
-            "bg-transparent border-transparent hover:border-border hover:bg-transparent"
+            "bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
         )}
-        variant="secondary"
+        variant={filters.sort === "price_desc" ? "default" : "ghost"}
         onClick={() => handleSortChange("price_desc")}
       >
         Price ↓

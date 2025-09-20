@@ -68,16 +68,16 @@ export const SignUpView = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5">
-      <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto">
+      <div className="bg-gradient-to-br from-background to-muted/50 h-screen w-full lg:col-span-3 overflow-y-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-8 p-4 lg:p-10"
+            className="flex flex-col gap-8 p-6 lg:p-12 max-w-md mx-auto lg:max-w-none"
           >
-            <div className="flex items-center justify-between mb-5">
-              <Link href="/">
+            <div className="flex items-center justify-between mb-8">
+              <Link href="/" className="group">
                 <span
-                  className={cn("text-2xl font-semibold", poppins.className)}
+                  className={cn("text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform", poppins.className)}
                 >
                   funroad
                 </span>
@@ -85,30 +85,30 @@ export const SignUpView = () => {
               <Button
                 asChild
                 variant="ghost"
-                size="sm"
-                className="text-base border-none underline"
+                className="font-semibold"
               >
                 <Link href="/sign-in">Sign in</Link>
               </Button>
             </div>
-            <h1 className="text-4xl font-medium">
-              Join over 1,580 creators earning money on Funroad.
-            </h1>
+            <div className="space-y-2">
+              <h1 className="text-4xl lg:text-5xl font-bold">Join funroad</h1>
+              <p className="text-xl text-muted-foreground">Start selling your products today</p>
+            </div>
             <FormField
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base block mb-2">
+                  <FormLabel className="text-lg font-semibold">
                     Username
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="h-12 text-base" />
                   </FormControl>
                   <FormDescription
-                    className={cn("hidden", showPreview && "block mt-2")}
+                    className={cn("hidden text-sm text-muted-foreground", showPreview && "block mt-2")}
                   >
                     Your store will be available at&nbsp;
-                    <strong>{username}</strong>.shop.com
+                    <strong className="text-primary">{username}</strong>.funroad.com
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -119,9 +119,9 @@ export const SignUpView = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base block mb-2">Email</FormLabel>
+                  <FormLabel className="text-lg font-semibold">Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="h-12 text-base" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,11 +132,11 @@ export const SignUpView = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base block mb-2">
+                  <FormLabel className="text-lg font-semibold">
                     Password
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" />
+                    <Input {...field} type="password" className="h-12 text-base" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,10 +147,10 @@ export const SignUpView = () => {
               disabled={register.isPending}
               type="submit"
               size="lg"
-              variant="elevated"
-              className="bg-black text-white hover:bg-pink-400 hover:text-primary"
+              variant="gradient"
+              className="h-12 text-base font-semibold"
             >
-              Create account
+              {register.isPending ? "Creating account..." : "Create account"}
             </Button>
           </form>
         </Form>

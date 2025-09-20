@@ -27,35 +27,35 @@ const CheckoutItem = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-[8.5rem_1fr_auto] gap-4 pr-4 border-b",
+        "grid grid-cols-[8.5rem_1fr_auto] gap-6 p-6 border-b last:border-b-0",
         isLast && "border-b-0"
       )}
     >
-      <div className="overflow-hidden border-r">
+      <div className="overflow-hidden rounded-xl">
         <div className="relative aspect-square h-full">
           <Image
             src={imageUrl || "/placeholder.png"}
             alt={name}
             fill
-            className="object-cover"
+            className="object-cover rounded-xl"
           />
         </div>
       </div>
-      <div className="py-4 flex flex-col justify-between">
+      <div className="flex flex-col justify-between">
         <div>
           <Link href={productUrl}>
-            <h4 className="font-bold underline">{name}</h4>
+            <h4 className="font-bold text-lg hover:text-primary transition-colors">{name}</h4>
           </Link>
           <Link href={tenantUrl}>
-            <p className="font-bold underline">{tenantName}</p>
+            <p className="font-semibold text-muted-foreground hover:text-primary transition-colors mt-1">{tenantName}</p>
           </Link>
         </div>
       </div>
 
-      <div className="py-4 flex flex-col justify-between">
-        <p className="font-medium">{formatCurrency(price)}</p>
+      <div className="flex flex-col justify-between items-end">
+        <p className="font-bold text-xl text-primary">{formatCurrency(price)}</p>
         <button
-          className="underline font-medium cursor-pointer"
+          className="text-destructive hover:text-destructive/80 font-semibold cursor-pointer transition-colors"
           onClick={onRemove}
           type="button"
         >

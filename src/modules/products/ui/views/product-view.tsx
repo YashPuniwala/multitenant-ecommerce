@@ -36,69 +36,70 @@ const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     trpc.products.getOne.queryOptions({ id: productId })
   );
   return (
-    <div className="px-4 lg:px-12 py-10">
-      <div className="border rounded-sm bg-white overflow-hidden">
-        <div className="relative aspect-[3.9] border-b">
+    <div className="px-4 lg:px-12 py-8">
+      <div className="rounded-3xl bg-card overflow-hidden shadow-2xl border-0">
+        <div className="relative aspect-[3.9] overflow-hidden">
           <Image
             src={data.cover?.url || "/placeholder.png"}
             alt={data.name}
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-6">
           <div className="col-span-4">
-            <div className="p-6">
-              <h1 className="text-4xl font-medium">{data.name}</h1>
+            <div className="p-8">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-2">{data.name}</h1>
             </div>
-            <div className="border-y flex">
-              <div className="px-6 py-4 flex items-center justofy-center border-r">
-                <div className="relative px-2 py-1 border bg-pink-400 w-fit">
-                  <p className="text-base font-medium">
+            <div className="border-y border-border/50 flex">
+              <div className="px-8 py-6 flex items-center justify-center border-r border-border/50">
+                <div className="bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3 rounded-xl shadow-lg">
+                  <p className="text-xl font-bold">
                     {formatCurrency(data.price)}
                   </p>
                 </div>
               </div>
 
-              <div className="px-6 py-4 flex items-center justify-center lg:border-r">
+              <div className="px-8 py-6 flex items-center justify-center lg:border-r border-border/50">
                 <Link
                   href={generateTenantUrl(tenantSlug)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 group"
                 >
                   {data.tenant.image?.url && (
                     <Image
                       src={data.tenant.image.url}
                       alt={data.tenant.name}
-                      width={20}
-                      height={20}
-                      className="rounded-full border shrink-0 size-[20px]"
+                      width={24}
+                      height={24}
+                      className="rounded-full border-2 shrink-0 size-[24px] group-hover:scale-105 transition-transform"
                     />
                   )}
-                  <p className="text-base underline font-medium">
+                  <p className="text-lg font-semibold group-hover:text-primary transition-colors">
                     {data.tenant.name}
                   </p>
                 </Link>
               </div>
 
-              <div className="hidden lg:flex px-6 py-4 items-center justify-center">
-                <div className="flex items-center gap-1">
-                  <StarRatings rating={3} iconClassName="size-4" />
+              <div className="hidden lg:flex px-8 py-6 items-center justify-center">
+                <div className="flex items-center gap-2">
+                  <StarRatings rating={3} iconClassName="size-5 fill-yellow-400 text-yellow-400" />
                 </div>
               </div>
             </div>
 
-            <div className="block lg:hideen px-4 py-6 items-center justify-center border-b">
-              <div className="flex items-center gap-1">
-                <StarRatings rating={4} iconClassName="size-4" />
-                <p className="text-base font-medium">{5} ratings</p>
+            <div className="block lg:hidden px-8 py-6 items-center justify-center border-b border-border/50">
+              <div className="flex items-center gap-2">
+                <StarRatings rating={4} iconClassName="size-5 fill-yellow-400 text-yellow-400" />
+                <p className="text-lg font-medium text-muted-foreground">{5} ratings</p>
               </div>
             </div>
 
-            <div className="p-6">
+            <div className="p-8">
               {data.description ? (
-                <p>{data.description}</p>
+                <p className="text-lg leading-relaxed text-muted-foreground">{data.description}</p>
               ) : (
-                <p className="font-medium text-muted-foreground italic">
+                <p className="text-lg font-medium text-muted-foreground italic">
                   No description provided
                 </p>
               )}
@@ -106,13 +107,14 @@ const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
           </div>
 
           <div className="col-span-2">
-            <div className="border-t lg:border-t-0 lg:border-l h-full">
-              <div className="flex flex-col gap-4 p-6 border-b">
-                <div className="flex flex-row items-center gap-2">
+            <div className="border-t lg:border-t-0 lg:border-l border-border/50 h-full bg-muted/30">
+              <div className="flex flex-col gap-6 p-8 border-b border-border/50">
+                <div className="flex flex-row items-center gap-3">
                   <CartButton productId={data.id} tenantSlug={tenantSlug} />
                   <Button
-                    variant="elevated"
-                    className="size-12"
+                    variant="outline"
+                    size="icon"
+                    className="size-12 shadow-lg border-2"
                     onClick={() => {}}
                     disabled={false}
                   >
@@ -120,31 +122,30 @@ const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                   </Button>
                 </div>
 
-                <p className="text-center font-medium">
+                <p className="text-center font-semibold text-muted-foreground">
                   {data.refundPolicy === "no-refunds"
                     ? "No refunds"
-                    : `${data.refundPolicy} money background gurantee`}
+                    : `${data.refundPolicy} money back guarantee`}
                 </p>
               </div>
 
-              <div className="p-6">
+              <div className="p-8">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-medium">Ratings</h3>
-                  <div className="flex items-center gap-x-1 font-medium">
-                    <StarIcon className="size-4 fill-black" />
-                    <p>({5})</p>
-                    <p className="text-base">({5}) ratings</p>
+                  <h3 className="text-2xl font-bold">Ratings</h3>
+                  <div className="flex items-center gap-2 font-semibold">
+                    <StarIcon className="size-5 fill-yellow-400 text-yellow-400" />
+                    <p className="text-lg">4.8 ({5} reviews)</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4">
+                <div className="grid grid-cols-[auto_1fr_auto] gap-4 mt-6">
                   {[5, 4, 3, 2, 1].map((stars) => (
                     <Fragment key={stars}>
-                      <div className="font-medium">
+                      <div className="font-semibold text-sm">
                         {stars} {stars === 1 ? "star" : "stars"}
                       </div>
-                      <Progress value={5} className="h-[1lh]" />
-                      <div className="font-medium">
+                      <Progress value={stars * 20} className="h-2" />
+                      <div className="font-semibold text-sm text-muted-foreground">
                         {25}%
                       </div>
                     </Fragment>

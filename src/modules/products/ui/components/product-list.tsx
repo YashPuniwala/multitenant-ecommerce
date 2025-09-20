@@ -38,9 +38,10 @@ const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
 
   if (data.pages?.[0]?.docs.length === 0) {
     return (
-      <div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-        <InboxIcon />
-        <p className="text-base font-medium">No products found</p>
+      <div className="border-2 border-dashed border-muted-foreground/30 flex items-center justify-center p-12 flex-col gap-4 bg-card w-full rounded-2xl">
+        <InboxIcon className="size-12 text-muted-foreground" />
+        <p className="text-lg font-semibold text-muted-foreground">No products found</p>
+        <p className="text-sm text-muted-foreground">Try adjusting your filters or search terms</p>
       </div>
     );
   }
@@ -49,7 +50,7 @@ const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
     <>
       <div
         className={cn(
-          "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
+          "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6",
           narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
         )}
       >
@@ -69,15 +70,16 @@ const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
           ))
         )}
       </div>
-      <div className="flex justify-center pt-8">
+      <div className="flex justify-center pt-12">
         {hasNextPage && (
           <Button
             disabled={isFetchingNextPage}
             onClick={() => fetchNextPage()}
-            className="font-medium disabled:opacity-50 text-base bg-white"
-            variant="elevated"
+            variant="outline"
+            size="lg"
+            className="font-semibold disabled:opacity-50 shadow-lg hover:shadow-xl"
           >
-            Load more
+            {isFetchingNextPage ? "Loading..." : "Load more products"}
           </Button>
         )}
       </div>
@@ -91,7 +93,7 @@ export const ProductListSkeleton = ({ narrowView }: Props) => {
   return (
     <div
       className={cn(
-        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
+        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6",
         narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
       )}
     >

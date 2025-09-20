@@ -45,12 +45,12 @@ const CategoryDropdown = ({
     >
       <div className="relative">
         <Button
-          variant="elevated"
+          variant="outline"
           className={cn(
-            "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
-            isActive && !isNavigationHovered && "bg-white border-primary",
+            "h-10 px-4 rounded-full border-2 transition-all duration-200 font-medium",
+            isActive && !isNavigationHovered && "bg-primary text-primary-foreground border-primary shadow-lg",
             isOpen &&
-              "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-[4px] translate-y-[4px]"
+              "bg-primary text-primary-foreground border-primary shadow-lg scale-105"
           )}
         >
           <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
@@ -60,7 +60,7 @@ const CategoryDropdown = ({
         {category.subcategories && category?.subcategories.length > 0 && (
           <div
             className={cn(
-              "absolute left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-l-transparent border-r-transparent border-b-black transition-opacity",
+              "absolute left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-b-[8px] border-l-transparent border-r-transparent border-b-primary transition-opacity",
               isOpen ? "opacity-100" : "opacity-0"
             )}
             style={{ top: "120%", zIndex: 200 }}

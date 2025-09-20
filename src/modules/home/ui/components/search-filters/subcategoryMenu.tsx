@@ -24,12 +24,12 @@ const SubcategoryMenu = ({
 
   return (
     <div
-      className="absolute z-100 mt-2"
+      className="absolute z-50 mt-2"
       style={{ top: "100%", left: 0 }}
     >
-      <div className="h-3 w-60" />
+      <div className="h-2 w-64" />
       <div
-        className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
+        className="w-64 text-foreground rounded-xl overflow-hidden border-0 shadow-xl backdrop-blur-md bg-card/95"
         style={{ backgroundColor }}
       >
         <div>
@@ -37,7 +37,7 @@ const SubcategoryMenu = ({
             <Link
               href={`/${category.slug}/${subcategory.slug}`}
               key={subcategory.slug}
-              className="w-full text-left p-3 hover:bg-black hover:text-white flex justify-between items-center underline font-medium"
+              className="w-full text-left p-4 hover:bg-primary hover:text-primary-foreground flex justify-between items-center font-medium transition-all duration-200 first:rounded-t-xl last:rounded-b-xl"
             >
               {subcategory.name}
             </Link>

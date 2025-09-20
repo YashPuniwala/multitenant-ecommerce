@@ -14,10 +14,10 @@ export const CartButton = ({ tenantSlug, productId }: Props) => {
 
   return (
     <Button
-      variant="elevated"
+      variant={cart.isProductInCart(productId) ? "outline" : "gradient"}
       className={cn(
-        "flex-1 bg-pink-400",
-        cart.isProductInCart(productId) && "bg-white"
+        "flex-1 shadow-lg font-semibold",
+        cart.isProductInCart(productId) && "border-2"
       )}
       onClick={() => cart.toggleProduct(productId)}
     >

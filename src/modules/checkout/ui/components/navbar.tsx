@@ -11,10 +11,10 @@ interface Props {
 
 const Navbar = ({ slug }: Props) => {
   return (
-    <nav className="h-20 border-b font-medium bg-white">
+    <nav className="h-16 border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
-        <p className="text-xl">Checkout</p>
-        <Button variant="elevated" asChild>
+        <h1 className="text-2xl font-bold">Checkout</h1>
+        <Button variant="outline" asChild className="shadow-lg">
           <Link href={generateTenantUrl(slug)}>Continue Shopping</Link>
         </Button>
       </div>
@@ -26,7 +26,7 @@ export default Navbar;
 
 export const NavbarSkeleton = () => {
   return (
-    <nav className="h-20 border-b font-medium bg-white">
+    <nav className="h-16 border-b bg-card/80 backdrop-blur-md">
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
         {/* <p className="text-xl">{data.name}</p> */}
       </div>

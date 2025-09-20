@@ -20,7 +20,7 @@ export const CheckoutButton = ({
   if (hideIfEmpty && totalItems === 0) return null;
 
   return (
-    <Button variant="elevated" asChild className={cn("bg-white", className)}>
+    <Button variant="gradient" asChild className={cn("shadow-lg", className)}>
       <Link href={`${generateTenantUrl(tenantSlug)}/checkout`}>
         <ShoppingCartIcon /> {totalItems > 0 ? totalItems : ""}
       </Link>

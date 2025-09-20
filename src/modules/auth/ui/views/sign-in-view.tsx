@@ -60,16 +60,16 @@ export const SignInView = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5">
-      <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto">
+      <div className="bg-gradient-to-br from-background to-muted/50 h-screen w-full lg:col-span-3 overflow-y-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-8 p-4 lg:p-10"
+            className="flex flex-col gap-8 p-6 lg:p-12 max-w-md mx-auto lg:max-w-none"
           >
-            <div className="flex items-center justify-between mb-5">
-              <Link href="/">
+            <div className="flex items-center justify-between mb-8">
+              <Link href="/" className="group">
                 <span
-                  className={cn("text-2xl font-semibold", poppins.className)}
+                  className={cn("text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform", poppins.className)}
                 >
                   funroad
                 </span>
@@ -77,21 +77,23 @@ export const SignInView = () => {
               <Button
                 asChild
                 variant="ghost"
-                size="sm"
-                className="text-base border-none underline"
+                className="font-semibold"
               >
                 <Link href="/sign-up">Sign up</Link>
               </Button>
             </div>
-            <h1 className="text-4xl font-medium">Welcome back to Funroad.</h1>
+            <div className="space-y-2">
+              <h1 className="text-4xl lg:text-5xl font-bold">Welcome back</h1>
+              <p className="text-xl text-muted-foreground">Sign in to your account</p>
+            </div>
 
             <FormField
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base block mb-2">Email</FormLabel>
+                  <FormLabel className="text-lg font-semibold">Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="h-12 text-base" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,11 +104,11 @@ export const SignInView = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base block mb-2">
+                  <FormLabel className="text-lg font-semibold">
                     Password
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" />
+                    <Input {...field} type="password" className="h-12 text-base" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,10 +119,10 @@ export const SignInView = () => {
               disabled={login.isPending}
               type="submit"
               size="lg"
-              variant="elevated"
-              className="bg-black text-white hover:bg-pink-400 hover:text-primary"
+              variant="gradient"
+              className="h-12 text-base font-semibold"
             >
-              Login
+              {login.isPending ? "Signing in..." : "Sign in"}
             </Button>
           </form>
         </Form>

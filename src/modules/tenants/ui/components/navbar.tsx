@@ -34,22 +34,22 @@ const Navbar = ({ slug }: Props) => {
   const { data } = useSuspenseQuery(trpc.tenants.getOne.queryOptions({ slug }));
 
   return (
-    <nav className="h-20 border-b font-medium bg-white">
+    <nav className="h-16 border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
         <Link
           href={generateTenantUrl(slug)}
-          className="flex items-center gap-2"
+          className="flex items-center gap-3 group"
         >
           {data.image?.url && (
             <Image
               src={data.image?.url}
-              width={32}
-              height={32}
-              className="rounded-full border shrink-0 size-[32px]"
+              width={40}
+              height={40}
+              className="rounded-full border-2 shrink-0 size-[40px] group-hover:scale-105 transition-transform"
               alt={slug}
             />
           )}
-          <p className="text-xl">{data.name}</p>
+          <p className="text-xl font-semibold group-hover:text-primary transition-colors">{data.name}</p>
         </Link>
 
         <CheckoutButton tenantSlug={slug} />
@@ -62,7 +62,7 @@ export default Navbar;
 
 export const NavbarSkeleton = () => {
   return (
-    <nav className="h-20 border-b font-medium bg-white">
+    <nav className="h-16 border-b bg-card/80 backdrop-blur-md">
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
         {/* <p className="text-xl">{data.name}</p> */}
       </div>

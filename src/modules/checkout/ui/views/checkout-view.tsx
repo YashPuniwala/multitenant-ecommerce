@@ -38,9 +38,10 @@ const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
   if (isLoading) {
     return (
-      <div className="lg:pt-16 pt-4 px-4 lg:px-12">
-        <div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-          <LoaderIcon className="text-muted-foreground animate-spin" />
+      <div className="lg:pt-16 pt-8 px-4 lg:px-12">
+        <div className="border-2 border-dashed border-muted-foreground/30 flex items-center justify-center p-12 flex-col gap-4 bg-card w-full rounded-2xl">
+          <LoaderIcon className="size-8 text-muted-foreground animate-spin" />
+          <p className="text-lg font-semibold text-muted-foreground">Loading your cart...</p>
         </div>
       </div>
     );
@@ -48,21 +49,21 @@ const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
   if (data?.totalDocs === 0) {
     return (
-      <div className="lg:pt-16 pt-4 px-4 lg:px-12">
-        <div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-          <InboxIcon className="text-base font-medium">
-            No products found
-          </InboxIcon>
+      <div className="lg:pt-16 pt-8 px-4 lg:px-12">
+        <div className="border-2 border-dashed border-muted-foreground/30 flex items-center justify-center p-12 flex-col gap-4 bg-card w-full rounded-2xl">
+          <InboxIcon className="size-12 text-muted-foreground" />
+          <p className="text-lg font-semibold text-muted-foreground">Your cart is empty</p>
+          <p className="text-sm text-muted-foreground">Add some products to get started</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="lg:pt-16 pt-4 px-4 lg:px-12">
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-16">
+    <div className="lg:pt-16 pt-8 px-4 lg:px-12">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-8 lg:gap-16">
         <div className="lg:col-span-4">
-          <div className="border rounded-md overflow-hidden bg-white">
+          <div className="rounded-2xl overflow-hidden bg-card shadow-lg border-0">
             {data?.docs.map((product, index) => (
               <CheckoutItem
                 key={product.id}
@@ -85,7 +86,7 @@ const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
             isCanceled={false}
             disabled={purchase.isPending}
-          />{" "}
+          />
         </div>
       </div>
     </div>

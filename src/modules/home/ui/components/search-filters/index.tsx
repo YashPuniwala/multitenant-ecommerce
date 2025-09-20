@@ -31,7 +31,7 @@ const SearchFilters = () => {
 
   return (
     <div
-      className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full"
+      className="px-4 lg:px-12 py-6 border-b flex flex-col gap-6 w-full bg-gradient-to-br from-background to-muted/30"
       style={{
         backgroundColor: activeCategoryColor,
       }}
@@ -54,7 +54,7 @@ export default SearchFilters;
 export const SearchFiltersSkeleton = () => {
   return (
     <div
-      className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full"
+      className="px-4 lg:px-12 py-6 border-b flex flex-col gap-6 w-full bg-gradient-to-br from-background to-muted/30"
       style={{
         backgroundColor: "#F5F5F5",
       }}

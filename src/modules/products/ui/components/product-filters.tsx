@@ -60,12 +60,12 @@ const ProductFilters = () => {
   };
   
   return (
-    <div className="border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between">
-        <p className="font-medium">Filters</p>
+    <div className="border-0 rounded-2xl bg-card shadow-lg">
+      <div className="p-6 border-b flex items-center justify-between">
+        <h3 className="font-semibold text-lg">Filters</h3>
         {hasAnyFilters && (
           <button
-            className="underline cursor-pointer"
+            className="text-primary hover:text-primary/80 font-medium cursor-pointer transition-colors"
             onClick={() => onClear()}
             type="button"
           >
@@ -74,7 +74,7 @@ const ProductFilters = () => {
         )}
       </div>
 
-      <ProductFilter title="Price">
+      <ProductFilter title="Price Range">
         <PriceFilter
           minPrice={filters.minPrice}
           maxPrice={filters.maxPrice}
@@ -82,7 +82,7 @@ const ProductFilters = () => {
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
         />
       </ProductFilter>
-      <ProductFilter title="Tags" className="border-b-0">
+      <ProductFilter title="Categories" className="border-b-0">
         <TagsFilter
           value={filters.tags}
           onChange={(value) => onChange("tags", value)}

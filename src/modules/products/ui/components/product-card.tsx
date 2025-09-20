@@ -36,43 +36,44 @@ const ProductCard = ({
 
   return (
     <Link href={`${generateTenantUrl(tenantSlug)}/products/${id}`}>
-      <div className="hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">
-        <div className="relative aspect-square">
+      <div className="group bg-card rounded-2xl overflow-hidden h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 card-hover border-0">
+        <div className="relative aspect-square overflow-hidden">
           <Image
             alt={name}
             fill
             src={imageUrl || "/placeholder.png"}
-            className="object-cover"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
-        <div className="p-4 border-y flex flex-col gap-3 flex-1">
-          <h2 className="text-md font-medium line-clamp-4">{name}</h2>
-          <div className="flex items-center gap-2" onClick={handleUserClick}>
+        <div className="p-5 flex flex-col gap-3 flex-1">
+          <h2 className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">{name}</h2>
+          <div className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors" onClick={handleUserClick}>
             {tenantImageUrl && (
               <Image
                 alt={tenantSlug}
                 src={tenantImageUrl}
-                width={16}
-                height={16}
-                className="rounded-full border shrink-0 size-[16px]"
+                width={20}
+                height={20}
+                className="rounded-full border-2 shrink-0 size-[20px]"
               />
             )}
-            <p className="text-sm underline font-medium">{tenantSlug}</p>
+            <p className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">{tenantSlug}</p>
           </div>
 
           {reviewCount > 0 && (
-            <div className="flex items-center gap-1">
-              <StarIcon className="size-3.5 fill-black" />
-              <p className="text-sm font-medium">
+            <div className="flex items-center gap-2">
+              <StarIcon className="size-4 fill-yellow-400 text-yellow-400" />
+              <p className="text-sm font-medium text-muted-foreground">
                 {reviewRating} ({reviewCount})
               </p>
             </div>
           )}
         </div>
 
-        <div className="p-4">
-          <div className="relative px-2 py-1 border bg-pink-400 w-fit">
-            <p className="text-sm font-medium">{formatCurrency(price)}</p>
+        <div className="p-5 pt-0">
+          <div className="bg-gradient-to-r from-primary to-purple-600 text-white px-4 py-2 rounded-xl w-fit shadow-lg">
+            <p className="text-lg font-bold">{formatCurrency(price)}</p>
           </div>
         </div>
       </div>
@@ -84,6 +85,6 @@ export default ProductCard;
 
 export const ProductCardSkeleton = () => {
   return (
-    <div className="w-full aspect-3/4 bg-neutral-200 rounded-lg animate-pulse" />
+    <div className="w-full aspect-[3/4] bg-muted rounded-2xl animate-pulse shadow-lg" />
   );
 };
